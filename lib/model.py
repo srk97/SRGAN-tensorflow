@@ -155,7 +155,9 @@ def test_data_loader(FLAGS):
     def preprocess_test(name, mode):
         im = sic.imread(name).astype(np.float32)
         # check grayscale image
-        if im.shape[-1] != 3:
+        if im.shape[-1] == 4:
+            im = im[:,:,0:3]
+        elif im.shape[-1] != 3:
             h, w = im.shape
             temp = np.empty((h, w, 3), dtype=np.uint8)
             temp[:, :, :] = im[:, :, np.newaxis]
@@ -198,7 +200,9 @@ def inference_data_loader(FLAGS):
     def preprocess_test(name):
         im = sic.imread(name).astype(np.float32)
         # check grayscale image
-        if im.shape[-1] != 3:
+        if im.shape[-1] == 4:
+            im = im[:,:,0:3]
+        elif im.shape[-1] != 3:
             h, w = im.shape
             temp = np.empty((h, w, 3), dtype=np.uint8)
             temp[:, :, :] = im[:, :, np.newaxis]
